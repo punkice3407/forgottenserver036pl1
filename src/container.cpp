@@ -330,10 +330,10 @@ ReturnValue Container::__queryMaxCount(int32_t index, const Thing* thing, uint32
 				destItem = destThing->getItem();
 
 			if(destItem && destItem->getID() == item->getID())
-				n = 100 - destItem->getItemCount();
+				n = MAX_STACK - destItem->getItemCount();
 		}
 
-		maxQueryCount = freeSlots * 100 + n;
+		maxQueryCount = freeSlots * MAX_STACK + n;
 		if(maxQueryCount < count)
 			return RET_CONTAINERNOTENOUGHROOM;
 	}

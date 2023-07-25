@@ -137,6 +137,7 @@ typedef std::map<int32_t, float> StageList;
 #define EVENT_DECAYINTERVAL 1000
 #define EVENT_DECAYBUCKETS 16
 #define STATE_DELAY 1000
+#define MAX_STACK 255
 
 /**
   * Main Game class.

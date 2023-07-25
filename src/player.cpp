@@ -2682,14 +2682,14 @@ ReturnValue Player::__queryMaxCount(int32_t index, const Thing* thing, uint32_t 
 	if(destItem)
 	{
 		if(destItem->isStackable() && item->getID() == destItem->getID())
-			maxQueryCount = 100 - destItem->getItemCount();
+			maxQueryCount = MAX_STACK - destItem->getItemCount();
 		else
 			maxQueryCount = 0;
 	}
 	else
 	{
 		if(item->isStackable())
-			maxQueryCount = 100;
+			maxQueryCount = MAX_STACK;
 		else
 			maxQueryCount = 1;
 

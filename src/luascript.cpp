@@ -3289,8 +3289,8 @@ int32_t LuaScriptInterface::luaDoTransformItem(lua_State* L)
 	}
 
 	const ItemType& it = Item::items[newId];
-	if(it.stackable && count > 100)
-		count = 100;
+	if(it.stackable && count > MAX_STACK)
+		count = MAX_STACK;
 
 	Item* newItem = g_game.transformItem(item, newId, count);
 	if(item->isRemoved())

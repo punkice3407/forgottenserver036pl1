@@ -1493,7 +1493,7 @@ ReturnValue Game::internalMoveItem(Creature* actor, Cylinder* fromCylinder, Cyli
 	{
 		if(toItem && toItem->getID() == item->getID())
 		{
-			n = std::min((uint32_t)100 - toItem->getItemCount(), m);
+			n = std::min((uint32_t)MAX_STACK - toItem->getItemCount(), m);
 			toCylinder->__updateThing(toItem, toItem->getID(), toItem->getItemCount() + n);
 			updateItem = toItem;
 		}
@@ -1570,7 +1570,7 @@ ReturnValue Game::internalAddItem(Creature* actor, Cylinder* toCylinder, Item* i
 		Item* moveItem = item;
 		if(item->isStackable() && toItem && toItem->getID() == item->getID())
 		{
-			uint32_t n = std::min((uint32_t)100 - toItem->getItemCount(), m);
+			uint32_t n = std::min((uint32_t)MAX_STACK - toItem->getItemCount(), m);
 			toCylinder->__updateThing(toItem, toItem->getID(), toItem->getItemCount() + n);
 			if(m - n > 0)
 			{
@@ -1925,11 +1925,11 @@ void Game::addMoney(Cylinder* cylinder, int32_t money, uint32_t flags /*= 0*/)
 		{
 			do
 			{
-				Item* remaindItem = Item::CreateItem(it->second, std::min(100, tmp));
+				Item* remaindItem = Item::CreateItem(it->second, std::min(MAX_STACK, tmp));
 				if(internalAddItem(NULL, cylinder, remaindItem, INDEX_WHEREEVER, flags) != RET_NOERROR)
 					internalAddItem(NULL, cylinder->getTile(), remaindItem, INDEX_WHEREEVER, FLAG_NOLIMIT);
 
-				tmp -= std::min(100, tmp);
+				tmp -= std::min(MAX_STACK, tmp);
 			}
 			while(tmp > 0);
 		}
@@ -2856,7 +2856,7 @@ bool Game::playerRequestTrade(uint32_t playerId, const Position& pos, int16_t st
 	}
 
 	Container* tradeContainer = tradeItem->getContainer();
-	if(tradeContainer && tradeContainer->getItemHoldingCount() + 1 > 100)
+	if(tradeContainer && tradeContainer->getItemHoldingCount() + 1 > MAX_STACK)
 	{
 		player->sendTextMessage(MSG_INFO_DESCR, "You cannot trade more than 100 items.");
 		return false;
