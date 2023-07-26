@@ -3635,14 +3635,14 @@ int32_t LuaScriptInterface::luaDoPlayerAddItem(lua_State* L)
 	else if(it.hasSubType())
 	{
 		if(it.stackable)
-			itemCount = (int32_t)std::ceil((float)count / 100);
+			itemCount = (int32_t)std::ceil((float)count / MAX_STACK);
 
 		subType = count;
 	}
 
 	while(itemCount > 0)
 	{
-		int32_t stackCount = std::min(100, subType);
+		int32_t stackCount = std::min(MAX_STACK, subType);
 		Item* newItem = Item::CreateItem(itemId, stackCount);
 		if(!newItem)
 		{
@@ -4368,7 +4368,7 @@ int32_t LuaScriptInterface::luaDoCreateItem(lua_State* L)
 	if(it.hasSubType())
 	{
 		if(it.stackable)
-			itemCount = (int32_t)std::ceil((float)count / 100);
+			itemCount = (int32_t)std::ceil((float)count / MAX_STACK);
 
 		subType = count;
 	}
@@ -4377,7 +4377,7 @@ int32_t LuaScriptInterface::luaDoCreateItem(lua_State* L)
 
 	while(itemCount > 0)
 	{
-		int32_t stackCount = std::min(100, subType);
+		int32_t stackCount = std::min(MAX_STACK, subType);
 		Item* newItem = Item::CreateItem(itemId, stackCount);
 		if(!newItem)
 		{
@@ -4422,8 +4422,8 @@ int32_t LuaScriptInterface::luaDoCreateItemEx(lua_State* L)
 
 	ScriptEnviroment* env = getEnv();
 	const ItemType& it = Item::items[(uint32_t)popNumber(L)];
-	if(it.stackable && count > 100)
-		count = 100;
+	if(it.stackable && count > MAX_STACK)
+		count = MAX_STACK;
 
 	Item* newItem = Item::CreateItem(it.id, count);
 	if(!newItem)
@@ -7342,7 +7342,7 @@ int32_t LuaScriptInterface::luaDoAddContainerItem(lua_State* L)
 	if(it.hasSubType())
 	{
 		if(it.stackable)
-			itemCount = (int32_t)std::ceil((float)count / 100);
+			itemCount = (int32_t)std::ceil((float)count / MAX_STACK);
 
 		subType = count;
 	}
@@ -7351,7 +7351,7 @@ int32_t LuaScriptInterface::luaDoAddContainerItem(lua_State* L)
 
 	while(itemCount > 0)
 	{
-		int32_t stackCount = std::min(100, subType);
+		int32_t stackCount = std::min(MAX_STACK, subType);
 		Item* newItem = Item::CreateItem(itemId, stackCount);
 		if(!newItem)
 		{
